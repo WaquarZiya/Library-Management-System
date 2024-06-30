@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RVITM Library</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/897/1005/115/library-artwork-books-wallpaper-preview.jpg');
+            background-size: cover;
+        }
+        .card {
+            margin-top: 100px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>RVITM Library New User Registeration</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="/register" method="post" id="myForm" onsubmit="return validateForm()">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name*" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Address*" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="phone_number" placeholder="Phone Number*" name="phone_number" required pattern="[0-9]{10}">
+                                <small class="form-text text-muted">Please enter 10 digits.</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" placeholder="Email*" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Set Password*</label>
+                                <input type="password" class="form-control" placeholder="Password" id="password" name="password" required pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d@$!%*?&]{8,}$">
+                                <small class="form-text text">Password must be minimum 8 characters long and include at least one number, one letter.</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popup" style="display: none; background-color: #f0f0f0; border: 1px solid #ccc; padding: 10px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+        User added successfully!
+    </div>
+    <script>
+        function validateForm() {
+            var password = document.getElementById('password').value;
+        
+            // Password validation
+            if (!/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,}$/.test(password)) {
+                alert("Password must be minimum 8 characters long and include only letters and numbers.");
+                return false;
+            }
+        
+            return true;
+        }
+        </script>
+    <script>
+        // Submit form asynchronously using JavaScript
+        document.getElementById('myForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Submit form data asynchronously using Fetch API
+            try {
+                var response = fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: document.getElementById('name').value,
+                        address: document.getElementById('address').value,
+                        phone_number: document.getElementById('phone_number').value,
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value
+                    })
+                }).then(response=>response.json()).then(data=>{
+                    alert(data.message);
+                });
+                    setTimeout(() => {
+                        // Redirect to a particular page after successful form submission
+                        window.location.href = '/index'; // Change '/success.html' to your desired URL
+                    }, 2000);
+            } catch (error) {
+                console.log('Error storing data:', error);
+            }
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

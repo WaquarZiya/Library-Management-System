@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RVITM Library</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet">
+    <style>
+        /* Style to make background and border invisible */
+        .container{
+            color: white;
+        }
+        .invisible-button {
+          background-color: transparent;
+          border: none;
+        }
+        .invisible-button:hover {
+          color: #000000; /* Darker text color on hover */
+        }
+      </style>
+</head>
+<body  style="background-image: url('https://c4.wallpaperflare.com/wallpaper/897/1005/115/library-artwork-books-wallpaper-preview.jpg'); background-size: cover;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <form action="/dashboard" method="get">
+            <button class="navbar-brand btn my-2 my-sm-0 mr-3" type="submit" style="background-color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#3E1F12'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#3E1F12'">Home</button>
+        </form>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form action="/books" method="get">
+                        <button class="invisible-button" type="submit">Books</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/staffs" method="get">
+                        <button class="invisible-button" type="submit">Staffs</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/users" method="get">
+                        <button class="invisible-button" type="submit">Users</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/fines" method="get">
+                        <button class="invisible-button" type="submit">Fines</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <form action="/index" method="get">
+            <button type="submit" class="btn my-2 my-sm-0 mr-3" style="background-color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#3E1F12'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#3E1F12'">Logout</button>
+        </form>
+    </nav>
+
+    <div class="container">
+        <h2 class="text-center my-4" style="color: white;">About Library</h2>
+        <div class="about" style="margin: 70px 100px; font-size: 20px; font-family: 'Salsa', cursive; color: #ffffff; text-align: justify; padding: 10px; background-color: rgba(255, 255, 255, 0.5);">
+            Welcome to the RVITM College Library, a cutting-edge center for academic exploration. Our facility offers a diverse collection of resources, from traditional books to digital databases, providing a dynamic environment for students, faculty, and researchers. With well-designed study spaces, advanced technology integration, and expert assistance from our friendly staff, the library caters to various learning styles and needs. Engage with our community through events, workshops, and sustainability initiatives, fostering intellectual growth and a commitment to environmental responsibility. RVITM College Library is not just a place to access information; it's a hub where curiosity meets resources, encouraging a lifelong passion for learning.
+        </div>
+        <div class="footer text-center my-4" style="position: bottom;padding-top: 150px; align-items: center;">
+            <p>2024 RVITM Library. All rights are reserved. &#169</p>
+            <p>Designed by: Waquar Ziya & Somashekar K</p>
+        </div>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- After the existing script tag -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Assuming you have the username available after a successful login
+        var username = "User123"; // Replace this with the actual username
+        // Display the username dynamically
+        var usernameDisplay = document.getElementById("username-display");
+        if (usernameDisplay) {
+            usernameDisplay.textContent = "Welcome, " + username;
+        }
+    });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RVITM Library</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 600px;
+        }
+        #popup {
+            display: none;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            width: 300px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .invisible-button {
+          background-color: transparent;
+          border: none;
+        }
+        .invisible-button:hover {
+          color: #000000; /* Darker text color on hover */
+        }
+    </style>
+</head>
+<body style="background-image: url('https://c4.wallpaperflare.com/wallpaper/897/1005/115/library-artwork-books-wallpaper-preview.jpg'); background-size: cover;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <form action="/dashboard" method="get">
+            <button class="navbar-brand btn my-2 my-sm-0 mr-3" type="submit" style="background-color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#3E1F12'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#3E1F12'">Home</button>
+        </form>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form action="/books" method="get">
+                        <button class="invisible-button" type="submit">Books</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/staffs" method="get">
+                        <button class="invisible-button" type="submit">Staffs</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/users" method="get">
+                        <button class="invisible-button" type="submit">Users</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/fines" method="get">
+                        <button class="invisible-button" type="submit">Fines</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <form action="/index" method="get">
+            <button type="submit" class="btn my-2 my-sm-0 mr-3" style="background-color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#3E1F12'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#3E1F12'">Logout</button>
+        </form>
+    </nav>
+    <div class="container" style="background-color: rgba(255, 255, 255, 0.5); padding-top: 0.5px; margin-top: 20px; padding-bottom: 10px;">
+        <h2 class="text-center mt-3">Update Staff Info</h2>
+        <form action="/update_staff" method="post" id="myForm">
+            <div class="form-group">
+                <input type="text" class="form-control" id="staff_id" name="staff_id" placeholder="Staff ID*" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="staff_name" name="staff_name" placeholder="Staff Name">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="department" name="department" placeholder="Department">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="phone_number" placeholder="Phone Number" pattern="[0-9]{10}" name="phone_number">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+            </div>
+            <button type="button" id="submit" class="btn btn-primary">Submit</button>
+            <button type="button" id="fetch_details" class="btn btn-success">Fetch</button>
+        </form>
+    </div>
+    <div id="popup" style="display: none; background-color: #f0f0f0; border: 1px solid #ccc; padding: 10px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+        Staff updated successfully!
+    </div>
+    <script>
+        document.getElementById('fetch_details').addEventListener('click', function() {
+            var fineId = document.getElementById('staff_id').value;
+            fetch('/fetch_staff_details', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ staff_id: fineId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                document.getElementById('staff_name').value = data.NAME;
+                document.getElementById('department').value = data.DEPARTMENT;
+                document.getElementById('phone_number').value = data.PHONE;
+                document.getElementById('email').value = data.EMAIL;
+                // You can populate other fields similarly if needed
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+    </script>
+    <script>
+        // Submit form asynchronously using JavaScript
+        document.getElementById('submit').addEventListener('click', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Submit form data asynchronously using Fetch API
+            try {
+                const response = await fetch('/update_staff', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        staff_id: document.getElementById('staff_id').value,
+                        staff_name: document.getElementById('staff_name').value,
+                        department: document.getElementById('department').value,
+                        phone_number: document.getElementById('phone_number').value,
+                        email: document.getElementById('email').value
+                    })
+                });
+
+                if (response.ok) {
+                    // Display a success message popup
+                    document.getElementById('popup').style.display = 'block';
+                    await setTimeout(() => {
+                        document.getElementById('popup').style.display = 'none';
+                    }, 3000); // Hide the popup after 3 seconds
+                    setTimeout(() => {
+                        // Redirect to a particular page after successful form submission
+                        window.location.href = '/staffs'; // Change '/success.html' to your desired URL
+                    }, 2000);
+                } else {
+                    // Display an error message
+                    alert('Error updating staff data');
+                }
+            } catch (error) {
+                console.error('Error storing data:', error);
+                alert('Error storing data');
+            }
+            document.getElementById('myForm').submit();
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

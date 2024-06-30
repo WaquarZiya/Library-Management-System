@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>RVITM Library</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Style for the container div */
+        .container {
+            margin: 30px auto; /* Center the container horizontally and add top and bottom margins */
+            display: flex;
+            flex-direction: column;
+        }
+    
+        /* Style for the table */
+        table {
+            width: 100%; /* Make the table fill the width of its container */
+            border-collapse: collapse; /* Collapse table borders */
+        }
+    
+        /* Style for table cells */
+        th, td {
+            border: 1px solid black; /* Add border to cells */
+            padding: 8px; /* Add padding to cells */
+            text-align: center; /* Align text to the left */
+        }
+
+        .invisible-button {
+          background-color: transparent;
+          border: none;
+        }
+        .invisible-button:hover {
+          color: #000000; /* Darker text color on hover */
+        }
+
+        .search {
+            margin-bottom: 20px;
+            text-align: right;
+            top: 0;
+            right: 0;
+        }
+    
+        /* Style for table header cells */
+    </style>
+</head>
+<body style="background-image: url('https://c4.wallpaperflare.com/wallpaper/897/1005/115/library-artwork-books-wallpaper-preview.jpg');">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <form action="/dashboard" method="get">
+            <button class="navbar-brand btn my-2 my-sm-0 mr-3" type="submit" style="background-color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#3E1F12'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#3E1F12'">Home</button>
+        </form>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form action="/books" method="get">
+                        <button class="invisible-button" type="submit">Books</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/staffs" method="get">
+                        <button class="invisible-button" type="submit">Staffs</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/users" method="get">
+                        <button class="invisible-button" type="submit">Users</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/fines" method="get">
+                        <button class="invisible-button" type="submit">Fines</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <form action="/index" method="get">
+            <button type="submit" class="btn my-2 my-sm-0 mr-3" style="background-color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#3E1F12'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#3E1F12'">Logout</button>
+        </form>
+    </nav>
+    <div class="container text-center text-white">
+        <div class="row">
+            <div class="col-md-12 mt-5">
+                <h1 style="margin-bottom: 40px;">Available Books</h1>
+            </div>
+        </div>
+        <div class="search"> 
+            <b>Search the table:
+            <input id="srch" type="text" placeholder="Search here">
+            </b>
+        </div>
+    <table class="table table-striped">
+        <tr class="bg-info"> 
+            <th>Book Id</th> 
+            <th>ISBN</th> 
+            <th>Title</th> 
+            <th>Author</th> 
+            <th>Available</th> 
+        </tr>
+        <tbody style="background-color: white;" id="book_Table"></tbody>
+      </table>
+      </div>
+      <script>
+          // Assuming the JSON file data is in the following format:
+          // [{"bookId":1,"isbn":"123-4567890123","title":"Example Title","author":"John Doe","available":true, "unwantedField": "example"}, ...]
+          
+          function buildTable(data){
+            var table = document.getElementById('book_Table');
+            for(var i= 0; i < data.length;i++){
+                var row = `
+                    <tr>
+                        <td>${data[i].BOOK_ID}</td>
+                        <td>${data[i].ISBN}</td>
+                        <td>${data[i].TITLE}</td>
+                        <td>${data[i].AUTHOR}</td>
+                        <td>${data[i].AVAILABLE_QTY}</td>
+                        </tr>    
+                `
+                table.innerHTML += row;
+            }
+          }
+          function fetchData() {
+        fetch('/available_books_file')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // JSON data successfully fetched
+                console.log(data);
+                // Store the data in a variable if needed
+                buildTable(data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+    fetchData();
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#srch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#book_Table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

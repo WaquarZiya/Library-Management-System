@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RVITM Library</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        /* Style to make background and border invisible */
+        .container{
+            color: white;
+        }
+        .invisible-button {
+          background-color: transparent;
+          border: none;
+        }
+        .invisible-button:hover {
+          color: #000000; /* Darker text color on hover */
+        }
+      </style>
+</head>
+<body  style="background-image: url('https://c4.wallpaperflare.com/wallpaper/897/1005/115/library-artwork-books-wallpaper-preview.jpg'); background-size: cover;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <form action="/dashboard" method="get">
+            <button class="navbar-brand btn my-2 my-sm-0 mr-3" type="submit" style="background-color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#3E1F12'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#3E1F12'">Home</button>
+        </form>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form action="/books" method="get">
+                        <button class="invisible-button" type="submit">Books</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/staffs" method="get">
+                        <button class="invisible-button" type="submit">Staffs</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/users" method="get">
+                        <button class="invisible-button" type="submit">Users</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="/fines" method="get">
+                        <button class="invisible-button" type="submit">Fines</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <form action="/index" method="get">
+            <button type="submit" class="btn my-2 my-sm-0 mr-3" style="background-color: white; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#3E1F12'; this.style.color='white'" onmouseout="this.style.backgroundColor='white'; this.style.color='#3E1F12'">Logout</button>
+        </form>
+    </nav>
+
+    <div class="bg-image text-center text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mt-5">
+                    <h1 style="margin-bottom: 40px;">Library Staff</h1>
+                </div>
+            </div>
+            <div class="row mt-5" style="margin-bottom: 70px;">
+                <div class="col-md-7">
+                    <form action="/view_staff" method="get">
+                        <button class="btn btn-lg btn-primary" type="submit" id="view_staff">View Staff</button>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form action="/update_staff" method="get">
+                        <button class="btn btn-lg btn-success" type="submit" id="update_staff">Update Staff</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-7">
+                    <form action="/add_staff" method="get">
+                        <button class="btn btn-lg btn-primary" type="submit" id="add_staff">Add Staff</button>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form action="/delete_staff" method="get">
+                        <button class="btn btn-lg btn-success" type="submit" id="delete_staff">Delete Staff</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer text-center my-4" style="position: bottom;padding-top: 225px; align-items: center;">
+            <p>2024 RVITM Library. All rights are reserved. &#169</p>
+            <p>Designed by: Waquar Ziya & Somashekar K</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
